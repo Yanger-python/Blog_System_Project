@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}首页{% endblock %}- 博客系统</title>
+    <meta name="viewport" content="width=device-width, inital-scale=1.0, shrink-to-fit=no" />
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" media="screen"/>
+    <style>
+    .post {
+            margin-bottom: 5px;
+    }
+    </style>
+    {% block extra_head %}
+    {% endblock %}
+</head>
+<body>
+    <div class="container-fluid head">
+			<nav class="navbar navbar-expand-lg bavbar-light bg-light">
+				<a class="navbar-brand" href="#">首页</a>
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+					<ul class="navbar-nav mr-auto">
+                        {% for nav in nav_category %}
+						<li class="nav-item">
+							<a class="nav-link" href="{% url 'category_post_list' nav.id %}">{{nav.name}}</a>
+						</li>
+                        {% endfor %}
+					</ul>
+					<form class="form-inline" action="/search/" method="GET">
+						<input class="form-control mr-sm-2" type="search" name="keyword" placeholder="Search"
+                               aria-label="Search" value="{{ keyword }}">
+						<button class="btn btn-outline-success" type="submit">搜索</button>
+					</form>
+				</div>
+			</nav>
+			<div class="jumbotron">
+				<h1 class="display-4">Blog</h1>
+				<p class="lead">基于Django的多人博客系统</p>
+			</div>
+    </div>
+
+    <div class="container-fluid main">
+			<div class="row">
+				<div class="col-9 post-list">
+                    {% block main %}
+                    {% endblock %}
+
+				</div>
+
+				<div class="col-3">
+                    {% block slidebar %}
+                        {% for slidebar in slidebars %}
+                        <div class="card sidebar">
+						    <div class="card-body">
+                                <h4 class="card-title">{{ slidebar.title }}</h4>
+                                <p>{{ slidebar.content_html }}</p>
+						    </div>
+					    </div>
+                        {% endfor %}
+                    {% endblock %}
+				</div>
+			</div>
+    </div>
+
+    <footer class="foot">
+        {% block footer %}
+        <div class="container-fluid">
+            <hr />
+            <nav class="nav category">
+                {% for nor in nor_category %}
+                <a href="{% url 'category_post_list' nor.id %}" class="nav-link">{{nor.name}}</a>
+                {% endfor %}
+            </nav>
+        </div>
+
+        <div class="container-power">
+            <span class="text-muted">Power by hyppp_t_f@163.com</span>
+        </div>
+        {% endblock %}
+    </footer>
+</body>
+</html>

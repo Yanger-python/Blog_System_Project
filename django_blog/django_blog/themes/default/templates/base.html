@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}首页{% endblock %}- 博客系统</title>
+</head>
+<body>
+    <div>顶部分类：
+        {% for nav in nav_category %}
+<!--        <a href="/category/{{nav.id}}/">{{nav.name}}</a>-->
+        <a href="{% url 'category_post_list' nav.id %}">{{nav.name}}</a>
+        {% endfor %}
+    </div>
+    <hr/>
+
+    {% block main %}
+    {% endblock %}
+    <hr/>
+
+    <div>底部分类：
+        {% for nor in nor_category %}
+<!--        <a href="/category/{{nor.id}}/">{{nor.name}}</a>-->
+        <a href="{% url 'category_post_list' nor.id %}">{{nor.name}}</a>
+        {% endfor %}
+    </div>
+    <hr/>
+
+    <div>侧边栏展示：
+        {% for slidebar in slidebars %}
+        <h4>{{ slidebar.title }}</h4>
+        {{ slidebar.context }}
+        {% endfor %}
+    </div>
+</body>
+</html>

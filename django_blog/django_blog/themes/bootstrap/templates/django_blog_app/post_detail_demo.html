@@ -1,0 +1,30 @@
+
+{% extends "../base.html" %}
+
+{% load comment_block %}
+
+{% block title %}文章详情页{% endblock %}
+
+{% block extra_head %}
+<link rel="stylesheet" href="https://cdn.bootcss.com/highlight.js/9.12.0/styles/googlecode.min.css">
+<script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+{% endblock %}
+
+{% block main %}
+    {% if posts_detail %}
+        <h1>{{ posts_detail.title }}</h1>
+        <div>
+            <span>分类：{{ posts_detail.category.name }}</span>
+            <span>作者：{{ posts_detail.owner.username }}</span>
+        </div>
+        <hr>
+        {% autoescape off %}
+        正文：{{ posts_detail.context }}
+        {% endautoescape %}
+    {% endif %}
+<hr/>
+
+{% comment_block request.path %}
+
+{% endblock %}

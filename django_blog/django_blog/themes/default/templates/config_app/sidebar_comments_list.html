@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>文章首页</title>
+</head>
+<body>
+    <ul>
+        {% for comment in comments %}
+        <li>
+            <a href="/post/{{ comments.target.id }}.html">{{ comments.target.title }}</a>
+            {{ comments.nickname }} : {{ comments.context }}
+        </li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

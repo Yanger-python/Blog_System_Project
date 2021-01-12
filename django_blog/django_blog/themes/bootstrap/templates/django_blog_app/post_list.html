@@ -1,0 +1,56 @@
+
+{% extends "../base.html" %}
+
+{% block title %}
+    {% if tag %}
+    标签页：{{ tag.name }}
+    {% elif category %}
+    分类页：{{ category.name }}
+    {% else %}
+    首页
+    {% endif %}
+{% endblock %}
+
+{% block main %}
+    <ul>
+        {% for post in posts_list %}
+        <li>
+<!--            <a href="/post/{{ post.id }}.html">{{ post.title }}</a>-->
+            <a href="{% url 'post_detail' post.id %}">{{ post.title }}</a>
+            <div>
+                <span>分类：{{ post.category.name }}</span>
+                <span>作者：{{ post.owner.username }}</span>
+            </div>
+            <p>摘要：{{ post.desc }}</p>
+        </li>
+        {% endfor %}
+    </ul>
+
+<div class="card post">
+    {% for post in posts_list %}
+    <div class="card-body">
+        <h5 class="card-title"><a href="{% url 'post_detail' post.id %}">{{ post.title }}</a></h5>
+        <span class="card-link">作者:<a href="#">{{ post.owner.username }}</a></span>
+        <span class="card-link">分类:<a href="{% url 'category_post_list' post.category.id %}">{{ post.category.name }}</a></span>
+        <span class="card-link">标签:
+            {% for tag in post.tag.all %}
+                <a href="{% url 'tag_post_list' tag.id %}">{{ tag.name }}</a>
+            {% endfor %}
+        </span>
+        <p class="card-text">摘要: {{ post.desc }}<a href="{% url 'post_detail' post.id %}">详细内容</a></p>
+    </div>
+    {% endfor %}
+</div>
+
+{% if page_obj %}
+{% if page_obj.has_previous %}
+    <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+{% endif %}
+    Page {{ page_obj.number }} of {{ paginator.num_pages }}.
+{% if page_obj.has_next %}
+    <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+{% endif %}
+{% endif %}
+
+{% endblock %}
+
